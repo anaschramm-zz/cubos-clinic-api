@@ -11,42 +11,42 @@ exports.createSchedulesController = async (req, res) => {
     if (req.body.type == "daily") {
         try {
             const bodySchedules = {
-                "id": uuidv4(),
+                "id": req.body.id ? req.body.id : uuidv4(),
                 "type": "daily",
-                "intervals": req.body.intervals
+                "intervals": validIntervals(req.body.intervals)
             }
             await db.get("schedules").push(bodySchedules).write();
             res.status(201).send({ message: "new schedules added" });
         } catch (error) {
-            res.status(500).send({ message: error });
+            res.status(400).send({ message: error.message });
         }
     }
     if (req.body.type == "specific-day") {
         try {
             const bodySchedules = {
-                "id": uuidv4(),
+                "id": req.body.id ? req.body.id : uuidv4(),
                 "type": "specific-day",
-                "day": req.body.day,
-                "intervals": req.body.intervals
+                "day": validDay(req.body.day),
+                "intervals": validIntervals(req.body.intervals)
             }
             await db.get("schedules").push(bodySchedules).write();
             res.status(201).send({ message: "new schedules added" });
         } catch (error) {
-            res.status(500).send({ message: error });
+            res.status(400).send({ message: error.message });
         }
     }
     if (req.body.type == "weekly") {
         try {
             const bodySchedules = {
-                "id": uuidv4(),
+                "id": req.body.id ? req.body.id : uuidv4(),
                 "type": "weekly",
                 "days": req.body.days,
-                "intervals": req.body.intervals
+                "intervals": validIntervals(req.body.intervals)
             }
             await db.get("schedules").push(bodySchedules).write();
             res.status(201).send({ message: "new schedules added" });
         } catch (error) {
-            res.status(500).send({ message: error });
+            res.status(400).send({ message: error.message });
         }
     }
 }
@@ -54,9 +54,9 @@ exports.createSchedulesController = async (req, res) => {
 exports.getSchedulesController = async (req, res) => {
     try {
         const data = db.get("schedules").value();
-        res.status(200).send(data);
+        res.status(201).send(data);
     } catch (error) {
-        res.status(500).send({ message: error });
+        res.status(500).send({ message: error.message });
     }
 }
 
@@ -65,9 +65,9 @@ exports.removeSchedulesController = async (req, res) => {
         const data = db.get("schedules")
             .remove({ "id": req.params.id })
             .write();
-        res.status(201).send({ message: "schedules removed" });
+        res.status(200).send({ message: "schedules removed" });
     } catch (error) {
-        res.status(500).send({ message: error });
+        res.status(500).send({ message: error.message });
     }
 }
 
@@ -105,14 +105,14 @@ exports.findSchedulesByIntervalsController = async (req, res) => {
         }
         res.status(200).send(responseIntervals);
     } catch (error) {
-        res.status(500).send({ message: "Initial date must be less than final date." });
+        res.status(400).send({ message: error.message });
     }
 }
 
 function getDate(initDate, endDate) {
     let intervalsDate = [];
-    const init = moment(initDate, "DD-MM-YYYY");
-    const end = moment(endDate, "DD-MM-YYYY");
+    const init = validDay(moment(initDate, "DD-MM-YYYY"));
+    const end = validDay(moment(endDate, "DD-MM-YYYY"));
 
     if (init.isBefore(end)) {
         while (init <= end) {
@@ -121,6 +121,28 @@ function getDate(initDate, endDate) {
         }
         return intervalsDate;
     } else {
-        throw new Error();
+        throw new Error("Initial date must be less than final date.");
     }
+}
+
+function validDay (day) {
+    if (!moment(day, "DD-MM-YYYY").isValid()){
+        throw new Error("Invalid day.");
+    }
+    return day;
+}
+
+function validIntervals (intervals) {
+    intervals.map((interval) => {
+        const start = moment(interval.start, "HH:mm");
+        const end = moment(interval.end, "HH:mm");
+
+        if(!start.isValid() || !end.isValid()) {
+            throw new Error("Time is not valid");
+        }
+        if(end.isBefore(start)) {
+            throw new Error("Time start must be less than end time");
+        }
+    });
+    return intervals;
 }

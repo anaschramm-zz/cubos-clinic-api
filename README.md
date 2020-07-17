@@ -51,7 +51,14 @@ Para rodar o projeto, basta utilizar o seguinte comando.
 
 $ npm start
 
+## Rodando os testes
+
+Para rodar os testes, basta utilizar o seguinte comando.
+
+$ npm test
+
 ## Documentação dos endpoints
 
-https://web.postman.co/collections/12033361-1e56bf6c-3fdb-4a52-a0e2-7b066f77db92?version=latest&workspace=1b281863-e138-4d1f-8894-825bee9a2db5
+Link para acessar o postman e documentação da collection.
 
+https://tinyurl.com/y4rqj2q8

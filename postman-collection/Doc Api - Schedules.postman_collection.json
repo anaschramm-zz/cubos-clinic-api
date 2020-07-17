@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "1e56bf6c-3fdb-4a52-a0e2-7b066f77db92",
+		"name": "Doc Api - Schedules",
+		"description": "# Apresentação\n\nDocumentação para utilização da Doc Api - Schedules.\n\n# Status\n\n**201 && 200 – SUCCESS_REQUEST**\n\nRequisição realizada corretamente.\n\n**400 – INVALID_ARGUMENT**\n\nValor do argumento inválido.\n\n**500 – INTERNAL_ERROR**\n\nErro não tratado.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Schedules",
+			"item": [
+				{
+					"name": "CreateSchedules",
+					"item": [
+						{
+							"name": "createSchedules - Daily",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"daily\",\r\n    \"intervals\": [{ \"start\": \"06:30\", \"end\": \"07:00\" }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2000/schedules/createSchedules",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2000",
+									"path": [
+										"schedules",
+										"createSchedules"
+									]
+								},
+								"description": "Criação da regra de atendimento diária."
+							},
+							"response": []
+						},
+						{
+							"name": "createSchedules - Specific Day",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"specific-day\",\r\n    \"day\": \"12-12-2020\",\r\n    \"intervals\": [{ \"start\": \"09:30\", \"end\": \"10:00\" },{ \"start\": \"13:30\", \"end\": \"14:00\" }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2000/schedules/createSchedules",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2000",
+									"path": [
+										"schedules",
+										"createSchedules"
+									]
+								},
+								"description": "Criação da regra de atendimento para um dia específico."
+							},
+							"response": []
+						},
+						{
+							"name": "createSchedules - Weekly",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"weekly\",\r\n    \"days\": [\"fri\",\"sat\"],\r\n    \"intervals\": [{ \"start\": \"16:00\", \"end\": \"18:00\" }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2000/schedules/createSchedules",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2000",
+									"path": [
+										"schedules",
+										"createSchedules"
+									]
+								},
+								"description": "Criação da regra de atendimento semanal."
+							},
+							"response": []
+						},
+						{
+							"name": "createSchedules - To remove",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{   \r\n    \"id\": \"254565\",\r\n    \"type\": \"daily\",\r\n    \"intervals\": [{ \"start\": \"06:30\", \"end\": \"07:00\" }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2000/schedules/createSchedules",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2000",
+									"path": [
+										"schedules",
+										"createSchedules"
+									]
+								},
+								"description": "Criação de uma regra de atendimento com ID fixo para remoção."
+							},
+							"response": []
+						}
+					],
+					"description": "Pasta com a organização dos endpoints para criação da regra de atendimento.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6d988a5a-f44b-4937-a525-02bd9834a5e0",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "191f11e9-a150-4ea0-a478-f1278400757a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "listSchedules",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2000/schedules/listSchedules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"schedules",
+								"listSchedules"
+							]
+						},
+						"description": "Listagem de todas as regras de atendimento."
+					},
+					"response": []
+				},
+				{
+					"name": "findSchedulesByIntervals",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2000/schedules/findSchedules/12-12-2020/18-12-2020",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"schedules",
+								"findSchedules",
+								"12-12-2020",
+								"18-12-2020"
+							]
+						},
+						"description": "Listagem de horários disponíveis no intervalo de datas especificado."
+					},
+					"response": []
+				},
+				{
+					"name": "removeSchedules",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2000/schedules/removeSchedules/254565",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"schedules",
+								"removeSchedules",
+								"254565"
+							]
+						},
+						"description": "Remoção das regras de atendimento através do ID."
+					},
+					"response": []
+				}
+			],
+			"description": "Nesta pasta é possível identificar todas as requisições utilizadas para agendamento(Schedules) na Doc Api – Schedules.",
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "862ea5e6-009c-406a-9775-c0dd31cf18bb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "08278c5b-3147-445d-b7f7-1739d62b7bda",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
